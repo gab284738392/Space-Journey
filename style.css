@@ -1,0 +1,401 @@
+/* =========================================
+   RESET & CORE STYLES
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 50%, #98D8E8 100%);
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Three.js Container */
+#world {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 0;
+}
+
+/* =========================================
+   UI SCREENS & OVERLAYS
+   ========================================= */
+
+/* --- MAIN MENU LAYOUT --- */
+#mainMenuScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    pointer-events: none; /* Let clicks pass through empty areas */
+}
+
+/* THE KILL SWITCH: THIS HIDES EVERYTHING WHEN GAME STARTS */
+#mainMenuScreen.hidden {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -999 !important;
+}
+
+.menu-header {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 101;
+}
+
+.game-title {
+    font-size: 60px;
+    color: #FFD700;
+    margin: 0;
+    text-shadow: 0px 4px 0px #ab9b12;
+}
+
+.game-subtitle {
+    font-size: 16px;
+    color: #ffffff;
+    letter-spacing: 2px;
+}
+
+/* --- PLANE SELECTOR (Dead Center) --- */
+.plane-selector-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    pointer-events: auto;
+}
+
+.plane-display-area {
+    width: 400px; /* Space between arrows */
+    height: 100%;
+}
+
+/* CIRCLE ARROW BUTTONS */
+.selector-arrow {
+    font-size: 40px;       
+    color: #FFD700;        
+    background: rgba(0, 0, 0, 0.6); 
+    border: 2px solid #FFD700;      
+    border-radius: 50%;    
+    width: 80px;           
+    height: 80px;          
+    display: flex;
+    align-items: center;   
+    justify-content: center; 
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+    z-index: 1000;         
+    padding-bottom: 5px;   
+}
+
+.selector-arrow:hover {
+    background: #FFD700;   
+    color: #000;           
+    transform: scale(1.1); 
+    box-shadow: 0 0 20px #FFD700; 
+}
+
+/* --- MENU BUTTONS (Force Bottom) --- */
+.menu-buttons {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 200;
+    pointer-events: auto;
+}
+
+/* BUTTON STYLES */
+button, .btn {   
+    padding: 18px 50px;
+    font-size: 16px;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block; 
+    text-align: center;
+    min-width: 250px;
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
+    font-family: inherit;
+}
+
+button:hover, .btn:hover {
+    background: linear-gradient(135deg, #5da3f5 0%, #4a90e2 100%);
+    transform: translateY(-3px);
+}
+
+/* --- OTHER SCREENS (About, Credits, etc) --- */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000; /* High Z-index for overlays */
+    pointer-events: auto;
+}
+
+.screen.hidden {
+    display: none !important;
+}
+
+.screen-content, .modal-box {
+    background: rgba(15, 23, 42, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    padding: 50px;
+    max-width: 900px;
+    width: 85%;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Space between items */
+}
+
+/* Typography */
+.screen-content h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+    color: #ffd700;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.screen-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+/* INSTRUCTIONS GRID */
+.instruction-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.inst-column h3 {
+    color: #4a90e2;
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+.inst-column p {
+    font-size: 14px;
+    color: #cccccc;
+    margin-bottom: 8px;
+}
+
+/* CREDITS LIST */
+.credits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-bottom: 20px;
+    align-items: center;
+    width: 100%;
+}
+
+.credit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.role { font-size: 12px; text-transform: uppercase; color: #888; letter-spacing: 2px; }
+.name { font-size: 24px; font-weight: 700; color: white; }
+.team-highlight { color: #ffd700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+
+/* --- GAME HUD --- */
+#gameHUD {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: white;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.9);
+    padding: 20px 25px;
+    border-radius: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.hud-item { margin-bottom: 10px; color: #ffd700; font-weight: 700; font-size: 18px; }
+
+.hud-fuel {
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.fuel-label { color: #ffd700; font-weight: 800; font-size: 14px; margin-bottom: 5px; }
+
+.fuel-bar-container {
+    width: 200px;
+    height: 20px;
+    background: #222;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.fuel-bar {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #00ff88, #00dd66);
+    transition: width 0.3s ease;
+}
+
+.fuel-bar.low {
+    background: linear-gradient(90deg, #ff3030, #ff6b35);
+    animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse { 50% { opacity: 0.6; } }
+
+.fuel-percent { text-align: center; font-size: 12px; margin-top: 5px; }
+
+/* --- MAIN MENU BUTTON (FIXED TOP RIGHT) --- */
+.main-menu-btn {
+    position: fixed !important;  
+    top: 280px !important;       
+    right: 20px !important;      /* Moves it to the Right */
+    left: auto !important;       
+    padding: 10px 20px;
+    background: #ffd700;
+    color: #000;
+    font-weight: 800;
+    border: 2px solid #fff;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 10000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+
+.main-menu-btn:hover {
+    transform: scale(1.1);
+    background: #ffed4a;
+}
+
+/* --- STORY SCREEN --- */
+#storyScreen {
+    background-color: #000;
+    overflow: hidden;
+    perspective: 400px;
+}
+
+.crawl-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 0;
+}
+
+.star-wars-content {
+    color: #feda4a;
+    font-family: "Century Gothic", sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 250%;
+    line-height: 1.5;
+    text-align: center;
+    transform-origin: 50% 100%;
+    transform: rotateX(25deg);
+    position: relative;
+    top: 100%;
+    animation: crawl 60s linear infinite;
+    width: 70%;
+}
+
+.crawl-title { margin-bottom: 50px; }
+
+@keyframes crawl {
+    0% { top: 100%; opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: -200%; opacity: 0; }
+}
+
+#backFromStory {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 2000;
+}
+
+/* --- VICTORY & CONFETTI --- */
+#confettiContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #f00;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh) rotate(720deg); }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .instruction-grid { grid-template-columns: 1fr; }
+    .modal-box { padding: 30px; width: 95%; }
+    .star-wars-content { font-size: 150%; width: 90%; }
+}

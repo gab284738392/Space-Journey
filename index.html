@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Journey</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* 1. FORCE TITLE TO TOP */
+        .menu-header {
+            position: absolute !important;
+            top: 50px !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 101 !important;
+        }
+
+        /* 2. FORCE PLANE TO DEAD CENTER */
+        .plane-selector-container {
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            height: 300px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            z-index: 100 !important;
+        }
+
+        /* 3. FORCE BUTTONS TO BOTTOM */
+        .menu-buttons {
+            position: absolute !important;
+            bottom: 40px !important; 
+            left: 0 !important;
+            width: 100% !important;
+            top: auto !important;    
+            margin: 0 !important;    
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 15px !important;
+            z-index: 200 !important;
+        }
+        
+        /* 4. ENSURE MENU FULL SCREEN */
+        #mainMenuScreen {
+            display: block !important; 
+            width: 100vw !important;
+            height: 100vh !important;
+            overflow: hidden !important;
+            pointer-events: none; 
+        }
+        
+        .menu-buttons, .selector-arrow { pointer-events: auto !important; }
+
+        /* KILL SWITCH */
+        #mainMenuScreen.hidden {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            z-index: -999 !important;
+        }
+
+        /* SCREENS Z-INDEX */
+        #winScreen, #endScreen, #pauseScreen, #aboutScreen, #creditsScreen, #featuresScreen {
+            z-index: 5000 !important; 
+            pointer-events: auto !important; 
+        }
+        
+        /* FEATURE GRID */
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            text-align: left;
+        }
+        .feature-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .feat-title { color: #ffd700; font-weight: bold; margin-bottom: 5px; }
+        .feat-desc { font-size: 14px; color: #ccc; }
+    </style>
+</head>
+<body>
+
+    <div id="world"></div>
+
+    <div id="mainMenuScreen" class="ui-layer screen">
+        <div class="menu-header">
+            <h1 class="game-title">SPACE JOURNEY</h1>
+            <p class="game-subtitle">Survive the endless skies. Master the day. Survive the night.</p>
+        </div>
+
+        <div class="plane-selector-container">
+            <div id="prevPlane" class="selector-arrow">&lt;</div>
+            <div class="plane-display-area"></div>
+            <div id="nextPlane" class="selector-arrow">&gt;</div>
+        </div>
+
+        <div class="menu-buttons">
+            <div class="btn" id="startGameButton">START GAME</div>
+            <div class="btn" id="storyButton">STORY</div>
+            <div class="btn" id="instructionsButton">INSTRUCTIONS</div>
+            <div class="btn" id="creditsButton">CREDITS</div>
+            <div class="btn" id="featuresButton" style="border: 1px solid #ffd700; color: #ffd700;">DEV ROADMAP</div>
+        </div>
+    </div>
+
+    <div id="featuresScreen" class="screen hidden">
+        <div class="screen-content modal-box">
+            <h1>FEATURE DEVELOPMENT</h1>
+            <p>Upcoming features for Space Journey v2.0</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feat-title">🚀 MULTIPLAYER RACING</div>
+                    <div class="feat-desc">Race against friends in real-time endless lobbies.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feat-title">🎨 HANGAR & SKINS</div>
+                    <div class="feat-desc">Customize plane colors, trails, and decals.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feat-title">⛈️ WEATHER SYSTEM</div>
+                    <div class="feat-desc">Dynamic thunderstorms, snow, and wind turbulence.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feat-title">☠️ HARDCORE MODE</div>
+                    <div class="feat-desc">First-person cockpit view with realistic fuel consumption.</div>
+                </div>
+            </div>
+            <button id="backFromFeatures" class="menu-btn">RETURN TO MENU</button>
+        </div>
+    </div>
+
+    <div id="aboutScreen" class="screen hidden">
+        <div class="screen-content modal-box">
+            <h1>PILOT'S MANUAL</h1>
+            <div class="instruction-grid">
+                <div class="inst-column">
+                    <h3>🎮 CONTROLS</h3>
+                    <p><strong>MOUSE:</strong> Guide Plane</p>
+                    <p><strong>W Key:</strong> Full Throttle (Climb)</p>
+                    <p><strong>S Key:</strong> Cut Engine (Dive)</p>
+                    <p><strong>P Key:</strong> Pause Game</p>
+                </div>
+                <div class="inst-column">
+                    <h3>🏆 VICTORY CONDITION</h3>
+                    <p>Survive for <strong>20,000 METERS</strong>.</p>
+                    <p>Reach the Mansion Runway to trigger the <span style="color:#00ff88">Auto-Landing Sequence</span>.</p>
+                    <p>Sit back and watch the fireworks!</p>
+                </div>
+                <div class="inst-column">
+                    <h3>🌑 THE CYCLE</h3>
+                    <p><strong>Day:</strong> High visibility. Safe.</p>
+                    <p><strong>Night:</strong> Pitch black. Use the moon to navigate.</p>
+                    <p>Collect <span style="color: #ffd700;">Yellow Cells</span> for fuel.</p>
+                </div>
+            </div>
+            <button id="backFromAbout" class="menu-btn">RETURN TO MENU</button>
+        </div>
+    </div>
+
+    <div id="creditsScreen" class="screen hidden">
+        <div class="screen-content modal-box">
+            <h1>CREDITS</h1>
+            <div class="credits-list">
+                <div class="credit-item"><span class="role">Lead Developer</span><span class="name">IAM_FU</span></div>
+                <div class="credit-item"><span class="role">The Team</span><span class="name">BARABAD • LABANON • MADARANG</span></div>
+                <div class="credit-item"><span class="role">Group Name</span><span class="name team-highlight">Mga Soaper Sisiskip Team</span></div>
+                <div class="credit-item"><span class="role">Engine</span><span class="name">Three.js / WebGL</span></div>
+            </div>
+            <button id="backFromCredits" class="menu-btn">RETURN TO MENU</button>
+        </div>
+    </div>
+
+    <div id="storyScreen" class="screen hidden">
+        <div class="crawl-container">
+            <div class="star-wars-content">
+                <div class="crawl-title"><p>EPISODE I</p><h1>THE ENDLESS SKY</h1></div>
+                <p>It is a time of great adventure.</p>
+                <p>A lone pilot travels across a mysterious, procedural world. The terrain is treacherous...</p>
+                <p>Fuel is scarce. You must scavenge for energy to keep your propeller spinning.</p>
+                <p>Survive for 20,000 Meters to find sanctuary.</p>
+                <p>DON'T. CRASH.</p>
+            </div>
+        </div>
+        <button id="backFromStory" class="menu-btn">RETURN TO MENU</button>
+    </div>
+
+    <div id="gameHUD" style="display: none;">
+        <button id="mainMenuButton" class="main-menu-btn">MAIN MENU</button>
+        <div class="hud-item">Distance: <span id="distanceDisplay">0</span>m</div>
+        <div class="hud-item">Score: <span id="scoreDisplay">0</span></div>
+        <div class="hud-item">Lives: <span id="livesDisplay">3</span></div>
+        <div class="hud-fuel">
+            <div class="fuel-label">⛽ FUEL</div>
+            <div class="fuel-bar-container"><div id="fuelBar" class="fuel-bar"></div></div>
+            <div class="fuel-percent" id="fuelPercent">100%</div>
+        </div>	
+        <div class="hud-item hud-pause">(P) Pause</div>
+    </div>
+    
+    <div id="winScreen" class="screen hidden">
+        <div class="screen-content modal-box">
+            <h1 style="color: #00ff88; text-shadow: 0 0 20px #00ff88;">MISSION ACCOMPLISHED</h1>
+            <p>You have survived the endless night.</p>
+            <p>Final Score: <span id="winScore">0</span></p>
+            <button id="restartWinButton" class="menu-btn">FLY AGAIN</button>
+            <button id="returnToMenuWin" class="menu-btn">MAIN MENU</button>
+        </div>
+    </div>
+    
+    <div id="confettiContainer"></div>
+    
+    <div id="pauseScreen" class="screen hidden">
+        <div class="screen-content modal-box">
+            <h1>PAUSED</h1>
+            <button id="resumeButton" class="menu-btn">RESUME</button>
+            <button id="returnToMenu" class="menu-btn">MAIN MENU</button>
+        </div>
+    </div>
+
+    <div id="endScreen" class="screen hidden">
+        <div class="screen-content modal-box">
+            <h1>GAME OVER</h1>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <button id="restartButton" class="menu-btn">PLAY AGAIN</button>
+            <button id="returnToMenuEnd" class="menu-btn">MAIN MENU</button>
+        </div>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/86/three.min.js'></script>
+    <script src="ThemeManager.js"></script> 
+    <script src="main.js"></script>
+</body>
+</html>

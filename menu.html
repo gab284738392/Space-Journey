@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Journey - Main Menu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="world"></div>
+	
+	<div id="mainMenuScreen" class="screen">
+	<div class="screen-content main-menu-box">
+		<h1>SPACE JOURNEY</h1>
+		<p>Survive the endless skies. Master the day. Survive the night.</p>
+		<div class="menu-buttons">
+			<button id="startGameButton" class="menu-btn">START GAME</button>
+			<button id="storyButton" class="menu-btn">STORY</button>
+			<button id="aboutButton" class="menu-btn">INSTRUCTIONS</button>
+			<button id="creditsButton" class="menu-btn">CREDITS</button>
+		</div>
+	</div>
+	</div>
+	
+	<div id="aboutScreen" class="screen hidden">
+	<div class="screen-content modal-box">
+		<h1>INSTRUCTIONS</h1>
+		<div class="instruction-grid">
+			<div class="inst-item">
+				<h3>🎮 CONTROLS</h3>
+				<p><strong>Mouse:</strong> Move cursor to fly.</p>
+				<p><strong>Keyboard:</strong> Use <strong>W/S</strong> or <strong>Arrow Keys</strong> to climb and dive.</p>
+				<p><strong>P:</strong> Pause Game</p>
+			</div>
+			<div class="inst-item">
+				<h3>⛽ SURVIVAL</h3>
+				<p><strong>Fuel is Life:</strong> Collect the <span style="color: #ffd700;">YELLOW CELLS</span> to refill your tank.</p>
+				<p><strong>Obstacles:</strong> Avoid the Giant Pines and Mountain Peaks.</p>
+			</div>
+			<div class="inst-item">
+				<h3>🌙 THE CYCLE</h3>
+				<p>The sun will set as you fly further.</p>
+				<p><strong>Day:</strong> Safe visibility.</p>
+				<p><strong>Night:</strong> Pitch black danger.</p>
+			</div>
+		</div>
+		<button id="backFromAbout" class="menu-btn">BACK</button>
+	</div>
+	</div>
+	
+	<div id="creditsScreen" class="screen hidden">
+	<div class="screen-content modal-box">
+		<h1>CREDITS</h1>
+		<p class="credit-role">Game Development</p>
+		<p class="credit-name">IAM_FU</p>
+		
+		<p class="credit-role">Team Members</p>
+		<p class="credit-name">BARABAD • LABANON • MADARANG</p>
+		
+		<p class="credit-role">Team Name</p>
+		<p class="credit-name" style="color: #ffd700;">Mga Soaper sisiskip Team</p>
+		
+		<p class="credit-role">3D Engine</p>
+		<p class="credit-name">Three.js</p>
+		
+		<button id="backFromCredits" class="menu-btn">BACK</button>
+	</div>
+	</div>
+	
+	<div id="storyScreen" class="screen hidden">
+    <div class="crawl-container">
+        <div class="star-wars-content">
+            <div class="crawl-title">
+                <p>EPISODE I</p>
+                <h1>THE ENDLESS SKY</h1>
+            </div>
+            <p>It is a time of great adventure.</p>
+            <p>A lone pilot travels across a mysterious, procedural world. The terrain is treacherous, filled with GIANT PINES and jagged MOUNTAIN PEAKS.</p>
+            <p>Fuel is scarce. You must scavenge for energy to keep your propeller spinning.</p>
+            <p>BEWARE THE SUNSET. When the light fades, a sinister darkness consumes the world. Visibility drops. The shadows grow long.</p>
+            <p>Fly fast. Fly smart. And whatever you do...</p>
+            <p>DON'T. CRASH.</p>
+            <br><br>
+            <button id="backFromStory" class="menu-btn" style="z-index: 1000; pointer-events: auto;">RETURN</button>
+        </div>
+    </div>
+	</div>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/86/three.min.js'></script>
+    <script src="ThemeManager.js"></script> 
+    <script src="main.js"></script>
+</body>
